@@ -2,14 +2,14 @@
 
 #include <M5Atom.h>
 #include <MIDI.h>
-#include <FastLED.h>
+//#include <FastLED.h>
 MIDI_CREATE_INSTANCE(HardwareSerial, Serial2, MIDI);
 
 void setup() {
   Serial.begin(115200);
   Serial2.begin(31250, SERIAL_8N1, 32, 26);
   M5.begin(true, false, true);
-  M5.dis.drawpix(0, 0x000000);
+  M5.dis.drawpix(0, 0x0F0000);
   MIDI.turnThruOff();
 
   // MIDI受信用のタスクを起動

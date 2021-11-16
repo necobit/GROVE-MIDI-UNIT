@@ -21,7 +21,7 @@ MIDI_CREATE_INSTANCE(HardwareSerial, Serial2, MIDI);
 #define MIDI_CC_COLOR_HUE 3 // 色相
 #define MIDI_CC_COLOR_SATURATION 4 // 彩度
 
-#define MIDI_RXCH 16 //受信MIDIチャンネル
+#define MIDI_RXCH 1 //受信MIDIチャンネル
 
 #define MIDI_VALUE_MAX 127
 
@@ -95,7 +95,7 @@ void loop() {
 
 void onNoteOn(uint8_t channel, uint8_t note, uint8_t velocity, uint16_t timestamp) {
   brightness = (uint8_t)((float)velocity * (float)MAX_BRIGHTNESS / (float)MIDI_VALUE_MAX);
-  //  Serial.printf("Received note on : channel %d, note %d, velocity %d, bright %d (timestamp %dms)\n", channel, note, velocity, brightness, timestamp);
+  Serial.printf("Received note on : channel %d, note %d, velocity %d, bright %d (timestamp %dms)\n", channel, note, velocity, brightness, timestamp);
   latestNoteOnTimestamp = timestamp;
   isPlaying = true; // 演出の再生開始をセット
 }
@@ -103,7 +103,7 @@ void onNoteOn(uint8_t channel, uint8_t note, uint8_t velocity, uint16_t timestam
 
 void onControlChange(uint8_t channel, uint8_t controller, uint8_t value, uint16_t timestamp)
 {
-  //  Serial.printf("Received control change : channel %d, controller %d, value %d (timestamp %dms)\n", channel, controller, value, timestamp);
+  Serial.printf("Received control change : channel %d, controller %d, value %d (timestamp %dms)\n", channel, controller, value, timestamp);
   switch (controller) {
     case MIDI_CC_DURATION: // 1演出あたりの長さを設定
       duration = ((uint8_t)value * 100.f / (float)MIDI_VALUE_MAX) / 2 + 10;
