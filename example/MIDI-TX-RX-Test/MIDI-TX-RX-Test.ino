@@ -26,10 +26,10 @@ void setup() {
 
 /** 送信側タスク */
 void loop() {
-  MIDI.sendNoteOn(40, 64, 1);
+  MIDI.sendNoteOn(0, 64, 1);
   Serial.println("Send CH1,Noteon,Note 40,Vel 64");
   delay(1000);
-  MIDI.sendNoteOff(40, 64, 1);
+  MIDI.sendNoteOff(0, 64, 1);
   Serial.println("Send CH1,Noteoff,Note 40,Vel 64");
   delay(1000);
 }
@@ -38,11 +38,11 @@ void loop() {
 void performanceTask(void *pvParameters) {
   while (1) {
     if (MIDI.read(1)) {
-      if (MIDI.getType() == midi::NoteOn && MIDI.getData1() == 40 && MIDI.getData2() == 64) {
+      if (MIDI.getType() == midi::NoteOn && MIDI.getData1() == 0 && MIDI.getData2() == 64) {
         Serial.println("Receive CH1,Noteon,Note 40,Vel 64");
         M5.dis.drawpix(0, 0x0f0f00);
       }
-      if (MIDI.getType() == midi::NoteOff && MIDI.getData1() == 40 && MIDI.getData2() == 64) {
+      if (MIDI.getType() == midi::NoteOff && MIDI.getData1() == 0 && MIDI.getData2() == 64) {
         Serial.println("Receive CH1,Noteoff,Note 40,Vel 64");
         M5.dis.drawpix(0, 0x000000);
       }
